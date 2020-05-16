@@ -142,6 +142,8 @@ element *s =new element(e2.elementType,e2.value);
 insertSymbol(e2.value,s,"0");
 string line1=loadLine(e1,0);
 cout<<"czy to ta linia?   "<<line1<<endl;
+cout<<"typ elementu"<<s->elementType.type<<endl;
+
 string line4= "sw $t0 , " +e2.value;
 code.push_back(line1);
 code.push_back(line4);
@@ -207,7 +209,9 @@ code.push_back(line4);
 
 element *e=new element(*finalType,temp);
 insertSymbol(temp,e,"0");
-arguments.push(*e);
+type *argType=new idType(1);
+element *arg=new element(*argType,temp);
+arguments.push(*arg);
 }
 counter++;
 
