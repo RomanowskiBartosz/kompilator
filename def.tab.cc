@@ -160,8 +160,9 @@ union YYSTYPE
 #line 23 "def.yy"
 char *text;
 int ival;
+float fval;
 
-#line 165 "def.tab.cc"
+#line 166 "def.tab.cc"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -480,16 +481,16 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  12
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   41
+#define YYLAST   43
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  27
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  10
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  24
+#define YYNRULES  25
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  45
+#define YYNSTATES  46
 
 #define YYUNDEFTOK  2
 #define YYMAXUTOK   271
@@ -538,9 +539,9 @@ static const yytype_int8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    34,    34,    35,    38,    40,    43,    53,    66,    86,
-      92,    99,   102,   103,   106,   110,   119,   120,   121,   125,
-     126,   127,   131,   139,   146
+       0,    35,    35,    36,    39,    41,    44,    54,    67,    87,
+      93,   100,   103,   104,   107,   111,   120,   121,   122,   126,
+     127,   128,   132,   140,   147,   148
 };
 #endif
 
@@ -568,7 +569,7 @@ static const yytype_int16 yytoknum[] =
 };
 # endif
 
-#define YYPACT_NINF (-17)
+#define YYPACT_NINF (-15)
 
 #define yypact_value_is_default(Yyn) \
   ((Yyn) == YYPACT_NINF)
@@ -582,11 +583,11 @@ static const yytype_int16 yytoknum[] =
      STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-      11,     7,    20,     1,     0,   -17,   -16,     2,    28,    -9,
-      12,    29,   -17,   -17,   -17,    -9,   -17,    -9,   -17,   -17,
-      -9,   -11,     5,   -17,   -17,   -17,    13,   -17,    -9,   -11,
-     -11,    -4,    -9,    -9,    -9,    -9,   -17,    12,   -11,   -17,
-       5,     5,   -17,   -17,   -17
+      12,   -12,   -10,    -2,     0,   -15,    13,    -1,     4,    -6,
+       6,    11,   -15,   -15,   -15,    -6,   -15,    -6,   -15,   -15,
+     -15,    -6,     7,     8,   -15,   -15,   -15,    14,   -15,    -6,
+       7,     7,     1,    -6,    -6,    -6,    -6,   -15,     6,     7,
+     -15,     8,     8,   -15,   -15,   -15
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -596,21 +597,21 @@ static const yytype_int8 yydefact[] =
 {
        0,     0,     0,     0,     0,     2,     4,     0,     0,     0,
        0,     0,     1,     3,     5,     0,    10,     0,    22,    23,
-       0,     8,    18,    21,    15,    14,     0,    13,     0,     6,
-       7,     0,     0,     0,     0,     0,    11,     0,     9,    24,
-      16,    17,    19,    20,    12
+      25,     0,     8,    18,    21,    15,    14,     0,    13,     0,
+       6,     7,     0,     0,     0,     0,     0,    11,     0,     9,
+      24,    16,    17,    19,    20,    12
 };
 
   /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -17,   -17,    -1,   -17,    32,   -17,     4,   -13,    -2,     3
+     -15,   -15,    33,   -15,    34,   -15,     5,   -14,     2,     3
 };
 
   /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-      -1,     4,     5,     6,    11,    26,    27,    21,    22,    23
+      -1,     4,     5,     6,    11,    27,    28,    22,    23,    24
 };
 
   /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -618,20 +619,20 @@ static const yytype_int8 yydefgoto[] =
      number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int8 yytable[] =
 {
-      12,    14,    29,    13,    30,    18,    19,    31,     9,    15,
-      32,    33,     1,     2,     3,    38,    20,    32,    33,    10,
-      10,     7,    39,     1,     2,     3,    24,    25,    34,    35,
-      40,    41,    36,    37,     8,    17,    28,    42,    43,    16,
-       0,    44
+      12,    30,     7,    31,     8,     9,    15,    32,    18,    19,
+      20,    17,     1,     2,     3,    39,    10,    10,    29,    21,
+      25,    26,    33,    34,     1,     2,     3,    40,    33,    34,
+      14,    35,    36,    37,    38,    41,    42,    13,    43,    44,
+       0,    16,     0,    45
 };
 
 static const yytype_int8 yycheck[] =
 {
-       0,    17,    15,     4,    17,    14,    15,    20,     7,     7,
-      21,    22,    12,    13,    14,    28,    25,    21,    22,    18,
-      18,    14,    26,    12,    13,    14,    14,    15,    23,    24,
-      32,    33,    19,    20,    14,     7,     7,    34,    35,     7,
-      -1,    37
+       0,    15,    14,    17,    14,     7,     7,    21,    14,    15,
+      16,     7,    12,    13,    14,    29,    18,    18,     7,    25,
+      14,    15,    21,    22,    12,    13,    14,    26,    21,    22,
+      17,    23,    24,    19,    20,    33,    34,     4,    35,    36,
+      -1,     7,    -1,    38
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
@@ -640,9 +641,9 @@ static const yytype_int8 yystos[] =
 {
        0,    12,    13,    14,    28,    29,    30,    14,    14,     7,
       18,    31,     0,    29,    17,     7,    31,     7,    14,    15,
-      25,    34,    35,    36,    14,    15,    32,    33,     7,    34,
-      34,    34,    21,    22,    23,    24,    19,    20,    34,    26,
-      35,    35,    36,    36,    33
+      16,    25,    34,    35,    36,    14,    15,    32,    33,     7,
+      34,    34,    34,    21,    22,    23,    24,    19,    20,    34,
+      26,    35,    35,    36,    36,    33
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
@@ -650,7 +651,7 @@ static const yytype_int8 yyr1[] =
 {
        0,    27,    28,    28,    29,    29,    30,    30,    30,    30,
       30,    31,    32,    32,    33,    33,    34,    34,    34,    35,
-      35,    35,    36,    36,    36
+      35,    35,    36,    36,    36,    36
 };
 
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
@@ -658,7 +659,7 @@ static const yytype_int8 yyr2[] =
 {
        0,     2,     1,     2,     1,     2,     4,     4,     3,     4,
        3,     3,     3,     1,     1,     1,     3,     3,     1,     3,
-       3,     1,     1,     1,     3
+       3,     1,     1,     1,     3,     1
 };
 
 
@@ -1354,45 +1355,45 @@ yyreduce:
   switch (yyn)
     {
   case 2:
-#line 34 "def.yy"
+#line 35 "def.yy"
                                 {;}
-#line 1360 "def.tab.cc"
+#line 1361 "def.tab.cc"
     break;
 
   case 3:
-#line 35 "def.yy"
+#line 36 "def.yy"
                                 {;}
-#line 1366 "def.tab.cc"
+#line 1367 "def.tab.cc"
     break;
 
   case 4:
-#line 38 "def.yy"
+#line 39 "def.yy"
                                 {;}
-#line 1372 "def.tab.cc"
+#line 1373 "def.tab.cc"
     break;
 
   case 5:
-#line 40 "def.yy"
+#line 41 "def.yy"
                                 {printf(" ;\n ");}
-#line 1378 "def.tab.cc"
+#line 1379 "def.tab.cc"
     break;
 
   case 6:
-#line 43 "def.yy"
+#line 44 "def.yy"
                                         {printf("%s =",(yyvsp[-2].text));
                                         type *ID=new idType(1);
                                         element *e=new element(*ID,(yyvsp[-2].text));
                                         k.arguments.push(*e);
 					type *INT=new intType(1);
 					element *symbolElement=new element(*INT,(yyvsp[-2].text));
-                                        k.insertSymbol((yyvsp[-2].text),symbolElement);
+                                        k.insertSymbol((yyvsp[-2].text),symbolElement,"0");
                                         k.genCode('=',"sw");
                                         }
-#line 1392 "def.tab.cc"
+#line 1393 "def.tab.cc"
     break;
 
   case 7:
-#line 53 "def.yy"
+#line 54 "def.yy"
                                         {
 					printf("%s =",(yyvsp[-2].text));
                                         type *ID=new idType(1);
@@ -1400,17 +1401,17 @@ yyreduce:
                                         k.arguments.push(*e);
                                         type *FLOAT=new floatType(1);
                                         element *symbolElement=new element(*FLOAT,(yyvsp[-2].text));
-                                       if(1== k.insertSymbol((yyvsp[-2].text),symbolElement))
+                                       if(1== k.insertSymbol((yyvsp[-2].text),symbolElement,"0"))
 						{yyerror("trying to declare an existing variable\n");
 						}
                                         k.genCode('=',"sw");
 
 					}
-#line 1410 "def.tab.cc"
+#line 1411 "def.tab.cc"
     break;
 
   case 8:
-#line 66 "def.yy"
+#line 67 "def.yy"
                                         {
 					printf("%s =",(yyvsp[-2].text));
                                         type *ID=new idType(1);
@@ -1418,7 +1419,7 @@ yyreduce:
                                         k.arguments.push(*e);
                                         type *INT=new intType(1);
                                         element *symbolElement=new element(*INT,(yyvsp[-2].text));
-                                      	 if(0 ==k.insertSymbol((yyvsp[-2].text),symbolElement))
+                                      	 if(0 ==k.insertSymbol((yyvsp[-2].text),symbolElement,"0"))
 					{	
 						yyerror("this variable has not been declared\n");
 					}else
@@ -1429,134 +1430,140 @@ yyreduce:
 
                                         
 					}
-#line 1433 "def.tab.cc"
+#line 1434 "def.tab.cc"
     break;
 
   case 9:
-#line 86 "def.yy"
+#line 87 "def.yy"
                                        {type *ID=new idType(4);
                    	                 element e(*ID,(yyvsp[-3].text));
                                         k.arguments.push(e);
                                         k.genCode('a',"sw");
 					k.sizesTemp.clear();
                                         }
-#line 1444 "def.tab.cc"
+#line 1445 "def.tab.cc"
     break;
 
   case 10:
-#line 92 "def.yy"
+#line 93 "def.yy"
                                         {type *INT=new intArrayType(1);
                                         element *e=new element(*INT,(yyvsp[-1].text));
                                         k.insertArray((yyvsp[-1].text),e);
 					k.sizesTemp.clear();
 					}
-#line 1454 "def.tab.cc"
+#line 1455 "def.tab.cc"
     break;
 
   case 11:
-#line 99 "def.yy"
+#line 100 "def.yy"
                                         {;}
-#line 1460 "def.tab.cc"
+#line 1461 "def.tab.cc"
     break;
 
   case 12:
-#line 102 "def.yy"
+#line 103 "def.yy"
                                         {;}
-#line 1466 "def.tab.cc"
+#line 1467 "def.tab.cc"
     break;
 
   case 13:
-#line 103 "def.yy"
+#line 104 "def.yy"
                                         {;}
-#line 1472 "def.tab.cc"
+#line 1473 "def.tab.cc"
     break;
 
   case 14:
-#line 106 "def.yy"
+#line 107 "def.yy"
                 {	
 	 	type *index=new arrayIndexType(1);
 	 	element *e=new element(*index,to_string((yyvsp[0].ival)));
 	 	k.sizesTemp.push_back(e);}
-#line 1481 "def.tab.cc"
+#line 1482 "def.tab.cc"
     break;
 
   case 15:
-#line 110 "def.yy"
+#line 111 "def.yy"
                 {
 		type *INT=new intType(1);
 		element *e=new element(*INT,(yyvsp[0].text));
 		k.sizesTemp.push_back(e);
 		}
-#line 1491 "def.tab.cc"
+#line 1492 "def.tab.cc"
     break;
 
   case 16:
-#line 119 "def.yy"
+#line 120 "def.yy"
                                 {printf(" + " );k.genCode('+',"add ");}
-#line 1497 "def.tab.cc"
+#line 1498 "def.tab.cc"
     break;
 
   case 17:
-#line 120 "def.yy"
+#line 121 "def.yy"
                                 {printf(" - ");k.genCode('-',"sub ");}
-#line 1503 "def.tab.cc"
+#line 1504 "def.tab.cc"
     break;
 
   case 18:
-#line 121 "def.yy"
+#line 122 "def.yy"
                                 {printf(" ");}
-#line 1509 "def.tab.cc"
+#line 1510 "def.tab.cc"
     break;
 
   case 19:
-#line 125 "def.yy"
+#line 126 "def.yy"
                                 {printf(" * ");k.genCode('*',"mul ");}
-#line 1515 "def.tab.cc"
+#line 1516 "def.tab.cc"
     break;
 
   case 20:
-#line 126 "def.yy"
+#line 127 "def.yy"
                                 {printf(" / ");k.genCode('/',"div ");}
-#line 1521 "def.tab.cc"
+#line 1522 "def.tab.cc"
     break;
 
   case 21:
-#line 127 "def.yy"
+#line 128 "def.yy"
                                 {printf(" ");}
-#line 1527 "def.tab.cc"
+#line 1528 "def.tab.cc"
     break;
 
   case 22:
-#line 131 "def.yy"
+#line 132 "def.yy"
                                 {
                                 printf(" %s zmienna ",(yyvsp[0].text));
                                 type *ID=new idType(1);
                                 element e(*ID,(yyvsp[0].text));
                                 k.arguments.push(e);
                                 }
-#line 1538 "def.tab.cc"
+#line 1539 "def.tab.cc"
     break;
 
   case 23:
-#line 139 "def.yy"
+#line 140 "def.yy"
                                 {
                                 printf( " %d ",(yyvsp[0].ival));
-                                cout<<"string value of LC"<<to_string((yyvsp[0].ival))<<endl;
-                                type *INT=new intType(16);
+                                //cout<<"string value of LC"<<to_string($1)<<endl;
+                                type *INT=new intType(1);
                                 element e(*INT,to_string((yyvsp[0].ival)));
                                 k.arguments.push(e);
                                 }
-#line 1550 "def.tab.cc"
+#line 1551 "def.tab.cc"
     break;
 
   case 24:
-#line 146 "def.yy"
+#line 147 "def.yy"
                                 {printf(" ");}
-#line 1556 "def.tab.cc"
+#line 1557 "def.tab.cc"
+    break;
+
+  case 25:
+#line 148 "def.yy"
+                                {k.makeFloat((yyvsp[0].fval));}
+#line 1563 "def.tab.cc"
     break;
 
 
-#line 1560 "def.tab.cc"
+#line 1567 "def.tab.cc"
 
       default: break;
     }
@@ -1788,7 +1795,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 148 "def.yy"
+#line 150 "def.yy"
 
 
 int main(int argc,char *argv[])
@@ -1812,14 +1819,20 @@ for(auto symbol : k.symbolTable)
         cout<< symbol.first<<": ";
         if(symbol.second->elementType.type =="intType")
         {
-        cout << " .word 0"<<endl;
+        cout << " .word "<<symbol.second->value<<endl;
         }else
         {
         if(symbol.second->elementType.type=="arrayInt")
         {
         cout << " .space " <<(symbol.second->elementType.size*4)<<endl;
-        }else
+        }
+	else
         {
+	if(symbol.second->elementType.type=="floatType")
+	{
+	cout<<" .float "<<symbol.second->value<<endl;
+	}
+	else
         cout<<"other type"<<endl;
         }
         }

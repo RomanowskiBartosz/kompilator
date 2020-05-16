@@ -73,8 +73,9 @@ union YYSTYPE
 #line 23 "def.yy"
 char *text;
 int ival;
+float fval;
 
-#line 78 "def.tab.hh"
+#line 79 "def.tab.hh"
 
 };
 typedef union YYSTYPE YYSTYPE;

@@ -23,7 +23,7 @@ int yyerror(const char *,...);
 \<\=            {return LEQ;}
 \;              {return ';';}
 0|[1-9][0-9]*   {yylval.ival = atoi(yytext);return LC;}
-(0|[1-9][0-9]*)[.][0-9]*        {return LR;}
+(0|[1-9][0-9]*)[.][0-9]*        {yylval.fval =atof(yytext);return LR;}
 [A-Za-z_][A-Za-z0-9_]*          {yylval.text=strdup(yytext);return ID;}
 \                               {;}
 \n                              {yylineno++;}

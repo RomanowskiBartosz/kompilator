@@ -22,6 +22,7 @@ kompilator k;
 %union
 {char *text;
 int ival;
+float fval;
 };
 
 %token LT GT CSTART CEND PRZYPISZ
@@ -29,7 +30,7 @@ int ival;
 %token FOR INT FLOAT
 %token <text> ID
 %token <ival> LC
-%token <ival> LR
+%token <fval> LR
 %%
 blok : linia                    {;}
      | blok linia               {;}
@@ -46,7 +47,7 @@ wyrprz : INT ID PRZYPISZ wyr            {printf("%s =",$2);
                                         k.arguments.push(*e);
 					type *INT=new intType(1);
 					element *symbolElement=new element(*INT,$2);
-                                        k.insertSymbol($2,symbolElement);
+                                        k.insertSymbol($2,symbolElement,"0");
                                         k.genCode('=',"sw");
                                         }
 
@@ -57,7 +58,7 @@ wyrprz : INT ID PRZYPISZ wyr            {printf("%s =",$2);
                                         k.arguments.push(*e);
                                         type *FLOAT=new floatType(1);
                                         element *symbolElement=new element(*FLOAT,$2);
-                                       if(1== k.insertSymbol($2,symbolElement))
+                                       if(1== k.insertSymbol($2,symbolElement,"0"))
 						{yyerror("trying to declare an existing variable\n");
 						}
                                         k.genCode('=',"sw");
@@ -70,7 +71,7 @@ wyrprz : INT ID PRZYPISZ wyr            {printf("%s =",$2);
                                         k.arguments.push(*e);
                                         type *INT=new intType(1);
                                         element *symbolElement=new element(*INT,$1);
-                                      	 if(0 ==k.insertSymbol($1,symbolElement))
+                                      	 if(0 ==k.insertSymbol($1,symbolElement,"0"))
 					{	
 						yyerror("this variable has not been declared\n");
 					}else
@@ -138,12 +139,13 @@ czynnik
 
         |LC                     {
                                 printf( " %d ",$1);
-                                cout<<"string value of LC"<<to_string($1)<<endl;
-                                type *INT=new intType(16);
+                                //cout<<"string value of LC"<<to_string($1)<<endl;
+                                type *INT=new intType(1);
                                 element e(*INT,to_string($1));
                                 k.arguments.push(e);
                                 }
         |'(' wyr ')'            {printf(" ");}
+	|LR			{k.makeFloat($1);}
         ;
 %%
 
@@ -168,14 +170,20 @@ for(auto symbol : k.symbolTable)
         cout<< symbol.first<<": ";
         if(symbol.second->elementType.type =="intType")
         {
-        cout << " .word 0"<<endl;
+        cout << " .word "<<symbol.second->value<<endl;
         }else
         {
         if(symbol.second->elementType.type=="arrayInt")
         {
         cout << " .space " <<(symbol.second->elementType.size*4)<<endl;
-        }else
+        }
+	else
         {
+	if(symbol.second->elementType.type=="floatType")
+	{
+	cout<<" .float "<<symbol.second->value<<endl;
+	}
+	else
         cout<<"other type"<<endl;
         }
         }

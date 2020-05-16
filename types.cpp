@@ -18,7 +18,7 @@ this->size=size;
 
 idType::idType(int size)
 {
-type="ID";
+type="idType";
 this->size=size;
 };
 
