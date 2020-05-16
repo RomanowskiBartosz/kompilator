@@ -1,4 +1,4 @@
-%{
+%{;
 #include <string>
 #include <stdio.h>
 #include <iostream>
@@ -7,79 +7,13 @@
 #include <map>
 #include <sstream>
 #include <algorithm>
-
+#include "types.h"
 #define INFILE_ERROR 1
 #define OUTLIFE_ERROR 2
 extern "C" int yylex();
 extern "C" int yyerror(const char *msg,...);
 using namespace std;
 
-class type
-{
-public:
-string type;
-int size;
-vector<int> sizes;
-vector<int> dims;
-};
-class arrayIndexType:public type
-{
-public:
-      arrayIndexType(int size)
-	{
-	type="indexType";
-	this->size=size;
-	}
-};
-class floatType :public type
-{
-public:
-      floatType(int size)
-	{
-	type="floatType";
-	this->size=size;
-	}
-};
-class intType:public type
-{
-public:
-intType(int size)
-{
-type="intType";
-this->size=size;
-}
-};
-class idType:public type
-{
-public:
-idType(int size)
-{
-type="ID";
-this->size=size;
-}
-};
-
-class intArrayType:public type
-{
-public:
-intArrayType(int size)
-{
-type="arrayInt";
-this->size=size;
-}
-};
-
-class element
-{
-        public:
-        string value;
-        type elementType;
-        element(type t,string value)
-        {
-        elementType=t;
-        this->value=value;
-        }
-};
 stack <element> arguments;
 map<string,element*> symbolTable;
 string loadLine(string,int);

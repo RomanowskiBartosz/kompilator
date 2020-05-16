@@ -67,7 +67,7 @@
 
 /* First part of user prologue.  */
 #line 1 "def.yy"
-
+;
 #include <string>
 #include <stdio.h>
 #include <iostream>
@@ -76,79 +76,13 @@
 #include <map>
 #include <sstream>
 #include <algorithm>
-
+#include "types.h"
 #define INFILE_ERROR 1
 #define OUTLIFE_ERROR 2
 extern "C" int yylex();
 extern "C" int yyerror(const char *msg,...);
 using namespace std;
 
-class type
-{
-public:
-string type;
-int size;
-vector<int> sizes;
-vector<int> dims;
-};
-class arrayIndexType:public type
-{
-public:
-      arrayIndexType(int size)
-	{
-	type="indexType";
-	this->size=size;
-	}
-};
-class floatType :public type
-{
-public:
-      floatType(int size)
-	{
-	type="floatType";
-	this->size=size;
-	}
-};
-class intType:public type
-{
-public:
-intType(int size)
-{
-type="intType";
-this->size=size;
-}
-};
-class idType:public type
-{
-public:
-idType(int size)
-{
-type="ID";
-this->size=size;
-}
-};
-
-class intArrayType:public type
-{
-public:
-intArrayType(int size)
-{
-type="arrayInt";
-this->size=size;
-}
-};
-
-class element
-{
-        public:
-        string value;
-        type elementType;
-        element(type t,string value)
-        {
-        elementType=t;
-        this->value=value;
-        }
-};
 stack <element> arguments;
 map<string,element*> symbolTable;
 string loadLine(string,int);
@@ -163,7 +97,7 @@ stringstream threesStream;
 int insertSymbol(string,element*);
 void insertArray(string,element*);
 
-#line 167 "def.tab.cc"
+#line 101 "def.tab.cc"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -232,11 +166,11 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 99 "def.yy"
+#line 33 "def.yy"
 char *text;
 int ival;
 
-#line 240 "def.tab.cc"
+#line 174 "def.tab.cc"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -613,9 +547,9 @@ static const yytype_int8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,   110,   110,   111,   114,   116,   119,   129,   142,   162,
-     168,   175,   178,   179,   182,   186,   195,   196,   197,   201,
-     202,   203,   207,   215,   222
+       0,    44,    44,    45,    48,    50,    53,    63,    76,    96,
+     102,   109,   112,   113,   116,   120,   129,   130,   131,   135,
+     136,   137,   141,   149,   156
 };
 #endif
 
@@ -1429,31 +1363,31 @@ yyreduce:
   switch (yyn)
     {
   case 2:
-#line 110 "def.yy"
+#line 44 "def.yy"
                                 {;}
-#line 1435 "def.tab.cc"
+#line 1369 "def.tab.cc"
     break;
 
   case 3:
-#line 111 "def.yy"
+#line 45 "def.yy"
                                 {;}
-#line 1441 "def.tab.cc"
+#line 1375 "def.tab.cc"
     break;
 
   case 4:
-#line 114 "def.yy"
+#line 48 "def.yy"
                                 {;}
-#line 1447 "def.tab.cc"
+#line 1381 "def.tab.cc"
     break;
 
   case 5:
-#line 116 "def.yy"
+#line 50 "def.yy"
                                 {printf(" ;\n ");}
-#line 1453 "def.tab.cc"
+#line 1387 "def.tab.cc"
     break;
 
   case 6:
-#line 119 "def.yy"
+#line 53 "def.yy"
                                         {printf("%s =",(yyvsp[-2].text));
                                         type *ID=new idType(1);
                                         element *e=new element(*ID,(yyvsp[-2].text));
@@ -1463,11 +1397,11 @@ yyreduce:
                                         insertSymbol((yyvsp[-2].text),symbolElement);
                                         genCode('=',"sw");
                                         }
-#line 1467 "def.tab.cc"
+#line 1401 "def.tab.cc"
     break;
 
   case 7:
-#line 129 "def.yy"
+#line 63 "def.yy"
                                         {
 					printf("%s =",(yyvsp[-2].text));
                                         type *ID=new idType(1);
@@ -1481,11 +1415,11 @@ yyreduce:
                                         genCode('=',"sw");
 
 					}
-#line 1485 "def.tab.cc"
+#line 1419 "def.tab.cc"
     break;
 
   case 8:
-#line 142 "def.yy"
+#line 76 "def.yy"
                                         {
 					printf("%s =",(yyvsp[-2].text));
                                         type *ID=new idType(1);
@@ -1504,116 +1438,116 @@ yyreduce:
 
                                         
 					}
-#line 1508 "def.tab.cc"
+#line 1442 "def.tab.cc"
     break;
 
   case 9:
-#line 162 "def.yy"
+#line 96 "def.yy"
                                        {type *ID=new idType(4);
                    	                 element e(*ID,(yyvsp[-3].text));
                                         arguments.push(e);
                                         genCode('a',"sw");
 					sizesTemp.clear();
                                         }
-#line 1519 "def.tab.cc"
+#line 1453 "def.tab.cc"
     break;
 
   case 10:
-#line 168 "def.yy"
+#line 102 "def.yy"
                                         {type *INT=new intArrayType(1);
                                         element *e=new element(*INT,(yyvsp[-1].text));
                                         insertArray((yyvsp[-1].text),e);
 					sizesTemp.clear();
 					}
-#line 1529 "def.tab.cc"
+#line 1463 "def.tab.cc"
     break;
 
   case 11:
-#line 175 "def.yy"
+#line 109 "def.yy"
                                         {;}
-#line 1535 "def.tab.cc"
+#line 1469 "def.tab.cc"
     break;
 
   case 12:
-#line 178 "def.yy"
+#line 112 "def.yy"
                                         {;}
-#line 1541 "def.tab.cc"
+#line 1475 "def.tab.cc"
     break;
 
   case 13:
-#line 179 "def.yy"
+#line 113 "def.yy"
                                         {;}
-#line 1547 "def.tab.cc"
+#line 1481 "def.tab.cc"
     break;
 
   case 14:
-#line 182 "def.yy"
+#line 116 "def.yy"
                 {	
 	 	type *index=new arrayIndexType(1);
 	 	element *e=new element(*index,to_string((yyvsp[0].ival)));
 	 	sizesTemp.push_back(e);}
-#line 1556 "def.tab.cc"
+#line 1490 "def.tab.cc"
     break;
 
   case 15:
-#line 186 "def.yy"
+#line 120 "def.yy"
                 {
 		type *INT=new intType(1);
 		element *e=new element(*INT,(yyvsp[0].text));
 		sizesTemp.push_back(e);
 		}
-#line 1566 "def.tab.cc"
+#line 1500 "def.tab.cc"
     break;
 
   case 16:
-#line 195 "def.yy"
+#line 129 "def.yy"
                                 {printf(" + " );genCode('+',"add ");}
-#line 1572 "def.tab.cc"
+#line 1506 "def.tab.cc"
     break;
 
   case 17:
-#line 196 "def.yy"
+#line 130 "def.yy"
                                 {printf(" - ");genCode('-',"sub ");}
-#line 1578 "def.tab.cc"
+#line 1512 "def.tab.cc"
     break;
 
   case 18:
-#line 197 "def.yy"
+#line 131 "def.yy"
                                 {printf(" ");}
-#line 1584 "def.tab.cc"
+#line 1518 "def.tab.cc"
     break;
 
   case 19:
-#line 201 "def.yy"
+#line 135 "def.yy"
                                 {printf(" * ");genCode('*',"mul ");}
-#line 1590 "def.tab.cc"
+#line 1524 "def.tab.cc"
     break;
 
   case 20:
-#line 202 "def.yy"
+#line 136 "def.yy"
                                 {printf(" / ");genCode('/',"div ");}
-#line 1596 "def.tab.cc"
+#line 1530 "def.tab.cc"
     break;
 
   case 21:
-#line 203 "def.yy"
+#line 137 "def.yy"
                                 {printf(" ");}
-#line 1602 "def.tab.cc"
+#line 1536 "def.tab.cc"
     break;
 
   case 22:
-#line 207 "def.yy"
+#line 141 "def.yy"
                                 {
                                 printf(" %s zmienna ",(yyvsp[0].text));
                                 type *ID=new idType(1);
                                 element e(*ID,(yyvsp[0].text));
                                 arguments.push(e);
                                 }
-#line 1613 "def.tab.cc"
+#line 1547 "def.tab.cc"
     break;
 
   case 23:
-#line 215 "def.yy"
+#line 149 "def.yy"
                                 {
                                 printf( " %d ",(yyvsp[0].ival));
                                 cout<<"string value of LC"<<to_string((yyvsp[0].ival))<<endl;
@@ -1621,17 +1555,17 @@ yyreduce:
                                 element e(*INT,to_string((yyvsp[0].ival)));
                                 arguments.push(e);
                                 }
-#line 1625 "def.tab.cc"
+#line 1559 "def.tab.cc"
     break;
 
   case 24:
-#line 222 "def.yy"
+#line 156 "def.yy"
                                 {printf(" ");}
-#line 1631 "def.tab.cc"
+#line 1565 "def.tab.cc"
     break;
 
 
-#line 1635 "def.tab.cc"
+#line 1569 "def.tab.cc"
 
       default: break;
     }
@@ -1863,7 +1797,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 224 "def.yy"
+#line 158 "def.yy"
 
 int insertSymbol(string name,element *ele)
 {
