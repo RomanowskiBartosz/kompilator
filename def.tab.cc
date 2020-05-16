@@ -77,27 +77,18 @@
 #include <sstream>
 #include <algorithm>
 #include "types.h"
+#include "kompilator.h"
+
 #define INFILE_ERROR 1
 #define OUTLIFE_ERROR 2
 extern "C" int yylex();
 extern "C" int yyerror(const char *msg,...);
 using namespace std;
 
-stack <element> arguments;
-map<string,element*> symbolTable;
-string loadLine(string,int);
-void addOp(char);
-void genCode(char,string);
-vector<string> code;
-vector<element*> sizesTemp;
-vector<int> valuesTemp;
-stringstream threesStream;
 
+kompilator k;
 
-int insertSymbol(string,element*);
-void insertArray(string,element*);
-
-#line 101 "def.tab.cc"
+#line 92 "def.tab.cc"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -166,11 +157,11 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 33 "def.yy"
+#line 23 "def.yy"
 char *text;
 int ival;
 
-#line 174 "def.tab.cc"
+#line 165 "def.tab.cc"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -547,9 +538,9 @@ static const yytype_int8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    44,    44,    45,    48,    50,    53,    63,    76,    96,
-     102,   109,   112,   113,   116,   120,   129,   130,   131,   135,
-     136,   137,   141,   149,   156
+       0,    34,    34,    35,    38,    40,    43,    53,    66,    86,
+      92,    99,   102,   103,   106,   110,   119,   120,   121,   125,
+     126,   127,   131,   139,   146
 };
 #endif
 
@@ -1363,209 +1354,209 @@ yyreduce:
   switch (yyn)
     {
   case 2:
-#line 44 "def.yy"
+#line 34 "def.yy"
                                 {;}
-#line 1369 "def.tab.cc"
+#line 1360 "def.tab.cc"
     break;
 
   case 3:
-#line 45 "def.yy"
+#line 35 "def.yy"
                                 {;}
-#line 1375 "def.tab.cc"
+#line 1366 "def.tab.cc"
     break;
 
   case 4:
-#line 48 "def.yy"
+#line 38 "def.yy"
                                 {;}
-#line 1381 "def.tab.cc"
+#line 1372 "def.tab.cc"
     break;
 
   case 5:
-#line 50 "def.yy"
+#line 40 "def.yy"
                                 {printf(" ;\n ");}
-#line 1387 "def.tab.cc"
+#line 1378 "def.tab.cc"
     break;
 
   case 6:
-#line 53 "def.yy"
+#line 43 "def.yy"
                                         {printf("%s =",(yyvsp[-2].text));
                                         type *ID=new idType(1);
                                         element *e=new element(*ID,(yyvsp[-2].text));
-                                        arguments.push(*e);
+                                        k.arguments.push(*e);
 					type *INT=new intType(1);
 					element *symbolElement=new element(*INT,(yyvsp[-2].text));
-                                        insertSymbol((yyvsp[-2].text),symbolElement);
-                                        genCode('=',"sw");
+                                        k.insertSymbol((yyvsp[-2].text),symbolElement);
+                                        k.genCode('=',"sw");
                                         }
-#line 1401 "def.tab.cc"
+#line 1392 "def.tab.cc"
     break;
 
   case 7:
-#line 63 "def.yy"
+#line 53 "def.yy"
                                         {
 					printf("%s =",(yyvsp[-2].text));
                                         type *ID=new idType(1);
                                         element *e=new element(*ID,(yyvsp[-2].text));
-                                        arguments.push(*e);
+                                        k.arguments.push(*e);
                                         type *FLOAT=new floatType(1);
                                         element *symbolElement=new element(*FLOAT,(yyvsp[-2].text));
-                                       if(1== insertSymbol((yyvsp[-2].text),symbolElement))
+                                       if(1== k.insertSymbol((yyvsp[-2].text),symbolElement))
 						{yyerror("trying to declare an existing variable\n");
 						}
-                                        genCode('=',"sw");
+                                        k.genCode('=',"sw");
 
 					}
-#line 1419 "def.tab.cc"
+#line 1410 "def.tab.cc"
     break;
 
   case 8:
-#line 76 "def.yy"
+#line 66 "def.yy"
                                         {
 					printf("%s =",(yyvsp[-2].text));
                                         type *ID=new idType(1);
                                         element *e=new element(*ID,(yyvsp[-2].text));
-                                        arguments.push(*e);
+                                        k.arguments.push(*e);
                                         type *INT=new intType(1);
                                         element *symbolElement=new element(*INT,(yyvsp[-2].text));
-                                      	 if(0 ==insertSymbol((yyvsp[-2].text),symbolElement))
+                                      	 if(0 ==k.insertSymbol((yyvsp[-2].text),symbolElement))
 					{	
 						yyerror("this variable has not been declared\n");
 					}else
 					{
-					genCode('=',"sw");
-					arguments.push(*e);
+					k.genCode('=',"sw");
+					k.arguments.push(*e);
 					}
 
                                         
 					}
-#line 1442 "def.tab.cc"
+#line 1433 "def.tab.cc"
     break;
 
   case 9:
-#line 96 "def.yy"
+#line 86 "def.yy"
                                        {type *ID=new idType(4);
                    	                 element e(*ID,(yyvsp[-3].text));
-                                        arguments.push(e);
-                                        genCode('a',"sw");
-					sizesTemp.clear();
+                                        k.arguments.push(e);
+                                        k.genCode('a',"sw");
+					k.sizesTemp.clear();
                                         }
-#line 1453 "def.tab.cc"
+#line 1444 "def.tab.cc"
     break;
 
   case 10:
-#line 102 "def.yy"
+#line 92 "def.yy"
                                         {type *INT=new intArrayType(1);
                                         element *e=new element(*INT,(yyvsp[-1].text));
-                                        insertArray((yyvsp[-1].text),e);
-					sizesTemp.clear();
+                                        k.insertArray((yyvsp[-1].text),e);
+					k.sizesTemp.clear();
 					}
-#line 1463 "def.tab.cc"
+#line 1454 "def.tab.cc"
     break;
 
   case 11:
-#line 109 "def.yy"
+#line 99 "def.yy"
                                         {;}
-#line 1469 "def.tab.cc"
+#line 1460 "def.tab.cc"
     break;
 
   case 12:
-#line 112 "def.yy"
+#line 102 "def.yy"
                                         {;}
-#line 1475 "def.tab.cc"
+#line 1466 "def.tab.cc"
     break;
 
   case 13:
-#line 113 "def.yy"
+#line 103 "def.yy"
                                         {;}
-#line 1481 "def.tab.cc"
+#line 1472 "def.tab.cc"
     break;
 
   case 14:
-#line 116 "def.yy"
+#line 106 "def.yy"
                 {	
 	 	type *index=new arrayIndexType(1);
 	 	element *e=new element(*index,to_string((yyvsp[0].ival)));
-	 	sizesTemp.push_back(e);}
-#line 1490 "def.tab.cc"
+	 	k.sizesTemp.push_back(e);}
+#line 1481 "def.tab.cc"
     break;
 
   case 15:
-#line 120 "def.yy"
+#line 110 "def.yy"
                 {
 		type *INT=new intType(1);
 		element *e=new element(*INT,(yyvsp[0].text));
-		sizesTemp.push_back(e);
+		k.sizesTemp.push_back(e);
 		}
-#line 1500 "def.tab.cc"
+#line 1491 "def.tab.cc"
     break;
 
   case 16:
-#line 129 "def.yy"
-                                {printf(" + " );genCode('+',"add ");}
-#line 1506 "def.tab.cc"
+#line 119 "def.yy"
+                                {printf(" + " );k.genCode('+',"add ");}
+#line 1497 "def.tab.cc"
     break;
 
   case 17:
-#line 130 "def.yy"
-                                {printf(" - ");genCode('-',"sub ");}
-#line 1512 "def.tab.cc"
+#line 120 "def.yy"
+                                {printf(" - ");k.genCode('-',"sub ");}
+#line 1503 "def.tab.cc"
     break;
 
   case 18:
-#line 131 "def.yy"
+#line 121 "def.yy"
                                 {printf(" ");}
-#line 1518 "def.tab.cc"
+#line 1509 "def.tab.cc"
     break;
 
   case 19:
-#line 135 "def.yy"
-                                {printf(" * ");genCode('*',"mul ");}
-#line 1524 "def.tab.cc"
+#line 125 "def.yy"
+                                {printf(" * ");k.genCode('*',"mul ");}
+#line 1515 "def.tab.cc"
     break;
 
   case 20:
-#line 136 "def.yy"
-                                {printf(" / ");genCode('/',"div ");}
-#line 1530 "def.tab.cc"
+#line 126 "def.yy"
+                                {printf(" / ");k.genCode('/',"div ");}
+#line 1521 "def.tab.cc"
     break;
 
   case 21:
-#line 137 "def.yy"
+#line 127 "def.yy"
                                 {printf(" ");}
-#line 1536 "def.tab.cc"
+#line 1527 "def.tab.cc"
     break;
 
   case 22:
-#line 141 "def.yy"
+#line 131 "def.yy"
                                 {
                                 printf(" %s zmienna ",(yyvsp[0].text));
                                 type *ID=new idType(1);
                                 element e(*ID,(yyvsp[0].text));
-                                arguments.push(e);
+                                k.arguments.push(e);
                                 }
-#line 1547 "def.tab.cc"
+#line 1538 "def.tab.cc"
     break;
 
   case 23:
-#line 149 "def.yy"
+#line 139 "def.yy"
                                 {
                                 printf( " %d ",(yyvsp[0].ival));
                                 cout<<"string value of LC"<<to_string((yyvsp[0].ival))<<endl;
                                 type *INT=new intType(16);
                                 element e(*INT,to_string((yyvsp[0].ival)));
-                                arguments.push(e);
+                                k.arguments.push(e);
                                 }
-#line 1559 "def.tab.cc"
+#line 1550 "def.tab.cc"
     break;
 
   case 24:
-#line 156 "def.yy"
+#line 146 "def.yy"
                                 {printf(" ");}
-#line 1565 "def.tab.cc"
+#line 1556 "def.tab.cc"
     break;
 
 
-#line 1569 "def.tab.cc"
+#line 1560 "def.tab.cc"
 
       default: break;
     }
@@ -1797,60 +1788,12 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 158 "def.yy"
-
-int insertSymbol(string name,element *ele)
-{
-if(symbolTable.find(name)==symbolTable.end())
-        {
-                symbolTable[name]=ele;
-return 0;
-        }
-return 1;
-}
-
-void insertArray(string s,element *e)
-{
-        if(symbolTable.find(s) == symbolTable.end())
-        {
-                int sizeAll=1;
-        for(auto size : sizesTemp)
-        {
-                sizeAll*=stoi(size->value);
-                e->elementType.sizes.push_back(stoi(size->value));
-        }
-        reverse(sizesTemp.begin(),sizesTemp.end());
-        int dimSize=1;
-        for(auto size : sizesTemp)
-        {
-                e->elementType.dims.push_back(dimSize);
-                dimSize*=stoi(size->value);
-        }
-        e->elementType.size=sizeAll;
-        symbolTable[s]=e;
-        }
-
-}
-string loadLine(string op,int regno)
-{
-stringstream s;
-s<< "l";
-if(isdigit(op[0]))
-        {
-        s<< "i ";
-        }
-else
-        {
-        s<<"w ";
-        }
-// ADD REGNO TO IT ALL
-s<<"$t"<<regno<<", "<<op;
-return s.str();
-}
+#line 148 "def.yy"
 
 
 int main(int argc,char *argv[])
 {
+
 if(argc>1)
 {
 //otwieranie plikow yyout, yyin
@@ -1863,8 +1806,8 @@ else
 yyparse();
 cout<<endl;
 
-cout<< "symbols\n"<<endl;
-for(auto symbol : symbolTable)
+cout<< ".data\n"<<endl;
+for(auto symbol : k.symbolTable)
 {
         cout<< symbol.first<<": ";
         if(symbol.second->elementType.type =="intType")
@@ -1881,103 +1824,16 @@ for(auto symbol : symbolTable)
         }
         }
 }
-cout << "CODE\n"<<endl;
-for(string line :code)
+cout << ".text\n"<<endl;
+for(string line :k.code)
 {
 cout << line<<endl;
 }
 cout<<"Threes.txt:\n";
-cout << threesStream.str();
+cout << k.threesStream.str();
 
 
 
 return 0;
 }
-
-
-void genCode(char op,string mnemoOp)
-{
-element e2=arguments.top();
-arguments.pop();
-element e1=arguments.top();
-arguments.pop();
-string temp="result";
-static int counter=1;
-temp+=to_string(counter);
-threesStream<<temp<<" <= ";
-if(op == '=')
-{
-//tu bedzie werdydikacja zgodnosci jak ja napiszesz idioto
-element *s =new element(e2.elementType,e2.value);
-
-insertSymbol(e2.value,s);
-string line1=loadLine(e1.value,0);
-string line4= "sw $t0 , " +e2.value;
-code.push_back(line1);
-code.push_back(line4);
-threesStream<<e2.value <<op <<e1.value << endl;
-}
-else
-if(op=='a')
-{
-//element e3=arguments.top();
-//arguments.pop();
-
-stringstream arrayValue;
-arrayValue<<"la $t4 ,"<<e2.value<<endl;
-element *my=symbolTable[e2.value];
-for(int i=0;i<sizesTemp.size();i++)
-{
-	if(sizesTemp[i]->elementType.type=="indexType")
-	{
-	arrayValue<<"li $t6 ,"<<sizesTemp[i]->value <<endl;		
-	}
-	else
-	{
-	if(sizesTemp[i]->elementType.type=="intType")
-	{arrayValue<<"lw $t6,"<<sizesTemp[i]->value<<endl;
-	}
-}
-	arrayValue<<"li $t7,"<<my->elementType.dims[i]<<endl<<"mul $t6,$t6,$t7"<<endl<<"mul $t6,$t6,4"<<endl<<"add $t4,$t4,$t6"<<endl;
-}
-code.push_back(arrayValue.str());
-string line1=loadLine(e1.value,0);
-string line2="sw $t0, ($t4)";
-code.push_back(line1);
-code.push_back(line2);
-}
-else
-{
-//matma na incie
-stringstream s;
-s<< e1.value << op << e2.value << endl;
-threesStream <<s.str();
-
-type *t=new intType(1);
-element *result=new element(*t,temp);
-arguments.push(*result);
-insertSymbol(temp,result);
-
-string line0='#'+s.str();
-string line1=loadLine(e1.value,0);
-string line2=loadLine(e2.value,1);
-string line3= mnemoOp +"$t0,$t0,$t1";
-string line4 = "sw $t0," +temp;
-code.push_back(line0);
-code.push_back(line1);
-code.push_back(line2);
-code.push_back(line3);
-code.push_back(line4);
-}
-type *ID=new idType(16);
-
-element e(*ID,temp);
-//arguments.push(e);
-counter++;
-
-};
-
-
-
-
 
