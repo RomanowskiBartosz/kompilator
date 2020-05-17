@@ -60,9 +60,11 @@ extern int yydebug;
     FOR = 266,
     INT = 267,
     FLOAT = 268,
-    ID = 269,
-    LC = 270,
-    LR = 271
+    IF = 269,
+    ID = 270,
+    LC = 271,
+    LR = 272,
+    COND = 273
   };
 #endif
 
@@ -75,7 +77,7 @@ char *text;
 int ival;
 float fval;
 
-#line 79 "def.tab.hh"
+#line 81 "def.tab.hh"
 
 };
 typedef union YYSTYPE YYSTYPE;

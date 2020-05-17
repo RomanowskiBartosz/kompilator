@@ -24,5 +24,8 @@ public:
 	void makeFloat(float value);
 	string loadLine(element,int);
 	string convertTypes(int,element,element);
-	
+	void genIfLabel();
+	int labelCounter;
+	void jumpStatment(string);
+	stack<string> ifLabels;
 };

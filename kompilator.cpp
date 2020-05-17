@@ -17,9 +17,66 @@ vector<element*> sizesTemp;
 vector<int> valuesTemp;
 stringstream threesStream;
 floatCounter=0;
+stack<string> ifLabels;
+labelCounter=0;
+}
+void kompilator::genIfLabel()
+{
+string label=ifLabels.top();
+ifLabels.pop();
+code.push_back(label+':');
+
+}
+void kompilator::jumpStatment(string cond)
+{
+labelCounter++;
+string label="IFLB"+to_string(labelCounter);
+ifLabels.push(label);
+
+element e2=arguments.top();
+arguments.pop();
+element e1=arguments.top();
+arguments.pop();
+/*
+lw $t2 , x
+lw $t3 , result23
+*/
+string line1=loadLine(e1,2);
+string line2=loadLine(e2,3);
+// zmienic by wczytywalo z dobrych rejestrow
+string regno1="$t2";
+string regno2="$t3";
+if(e1.elementType.type=="idType")
+{
+	if(symbolTable[e1.value]->elementType.type=="floatType")
+{
+        regno1="$f2";
+}
+}
+
+if(e2.elementType.type=="idType")
+{
+        if(symbolTable[e2.value]->elementType.type=="floatType")
+{
+        regno1="$f2";
+}
 }
 
 
+if(e1.elementType.type=="floatType")
+{
+	regno1="$f2";
+}
+if(e2.elementType.type=="floatType")
+{
+        regno2="$f2";
+}
+
+string line3=cond+" "+regno1+", "+regno2+", "+label;
+code.push_back(line1);
+code.push_back(line2);
+code.push_back(line3);
+}
 int kompilator::insertSymbol(string name,element *ele,string value)
 {
 if(symbolTable.find(name)==symbolTable.end())
@@ -117,7 +174,7 @@ string kompilator::convertTypes(int regno,element e1,element e2)
 	
 	if(!(e1.elementType.type=="floatType"&&e2.elementType.type=="intType"))
 	{
-		return "error wrong conversion";
+		return "";
 	}
 	stringstream s;
 	s<< "mtc1 $t"<<regno<<", "<<"$f"<<floatCounter<<endl;
@@ -222,9 +279,9 @@ if(finalType->type=="floatType")
 }
 code.push_back(line0);
 code.push_back(line1);
-code.push_back(convertTypes(0,e1,e2));
-code.push_back(line2);
 code.push_back(convertTypes(0,e2,e1));
+code.push_back(line2);
+code.push_back(convertTypes(1,e1,e2));
 code.push_back(line3);
 code.push_back(line4);
 

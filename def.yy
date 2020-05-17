@@ -28,16 +28,16 @@ float fval;
 %token LT GT CSTART CEND PRZYPISZ
 %token LEQ GEQ EQ
 %token FOR INT FLOAT
+%token IF
 %token <text> ID
 %token <ival> LC
 %token <fval> LR
+%token <text> COND
 %%
 blok : linia                    {;}
      | blok linia               {;}
      ;
 
-linia : wyrprz                  {;}
-      ;
 linia : wyrprz ';'              {printf(" ;\n ");}
       ;
 
@@ -68,7 +68,7 @@ wyrprz : INT ID PRZYPISZ wyr            {printf("%s =",$2);
 					printf("%s =",$1);
                                         type *ID=new idType(1);
                                         element *e=new element(*ID,$1);
-                                        k.arguments.push(*e);
+                                       	k.arguments.push(*e);
                                         type *INT=new intType(1);
                                         element *symbolElement=new element(*INT,$1);
                                       	 if(0 ==k.insertSymbol($1,symbolElement,"0"))
@@ -82,7 +82,7 @@ wyrprz : INT ID PRZYPISZ wyr            {printf("%s =",$2);
 
                                         
 					}
-	;
+	
 						
         |ID dimDecl PRZYPISZ wyr       {type *ID=new idType(4);
                    	                 element e(*ID,$1);
@@ -95,8 +95,13 @@ wyrprz : INT ID PRZYPISZ wyr            {printf("%s =",$2);
                                         k.insertArray($2,e);
 					k.sizesTemp.clear();
 					}
+	|IFExpr				{;}
         ;
-
+	;
+IFExpr	: ifBegin  blok			{cout<<"end of if"<<endl;k.genIfLabel();}
+   	;
+ifBegin : IF '('wyr COND wyr')' 		{k.jumpStatment($4);}
+	;	
 dimDecl : '[' sizeConst ']'             {;}
         ;
 

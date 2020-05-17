@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "def.tab.hh"
+
 extern int yylineno;
 int yyerror(const char *,...);
 %}
@@ -19,9 +20,17 @@ int yyerror(const char *,...);
 \)              {return ')';}
 \[              {return '[';}
 \]              {return ']';}
+\=\=		{yylval.text="bne";return COND; }
 \=              {return PRZYPISZ;}
-\<\=            {return LEQ;}
+\<\=            {printf(">\n");yylval.text = "bgt";return COND;}
+\>\=		{printf(">=\n");yylval.text="blt";return COND;}
+\<		{printf("<<<<<<<<BOY\n");yylval.text = "bge";return COND;}
+\>		{printf(">\n");yylval.text="ble";return COND;}
+\!\=		{yylval.text ="beq";return COND;}
 \;              {return ';';}
+"if"		{printf("ifTag\n");return IF;}
+\{		{;}
+\}		{;}
 0|[1-9][0-9]*   {yylval.ival = atoi(yytext);return LC;}
 (0|[1-9][0-9]*)[.][0-9]*        {yylval.fval =atof(yytext);return LR;}
 [A-Za-z_][A-Za-z0-9_]*          {yylval.text=strdup(yytext);return ID;}
