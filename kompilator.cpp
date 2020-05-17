@@ -19,12 +19,45 @@ stringstream threesStream;
 floatCounter=0;
 stack<string> ifLabels;
 labelCounter=0;
+whileCounter=0;
 }
+void kompilator::genWhileLabel()
+{
+string label=ifLabels.top();
+ifLabels.pop();
+string line4="b WHBEG"+to_string(whileCounter);
+code.push_back(line4);
+code.push_back(label+':');
+whileCounter++;
+}
+
 void kompilator::genIfLabel()
 {
 string label=ifLabels.top();
 ifLabels.pop();
 code.push_back(label+':');
+}
+void kompilator::whileJump(string cond)
+{
+string label="WHEND"+to_string(whileCounter);
+ifLabels.push(label);
+
+
+element e2=arguments.top();
+arguments.pop();
+element e1=arguments.top();
+arguments.pop();
+
+string line1=loadLine(e1,2);
+string line2=loadLine(e2,3);
+// zmienic by wczytywalo z dobrych rejestrow
+string regno1="$t2";
+string regno2="$t3";
+string line3=cond+" "+regno1+", "+regno2+", "+label;
+code.push_back("WHBEG"+to_string(whileCounter)+':');
+code.push_back(line1);
+code.push_back(line2);
+code.push_back(line3);
 
 }
 void kompilator::jumpStatment(string cond)
@@ -46,32 +79,6 @@ string line2=loadLine(e2,3);
 // zmienic by wczytywalo z dobrych rejestrow
 string regno1="$t2";
 string regno2="$t3";
-if(e1.elementType.type=="idType")
-{
-	if(symbolTable[e1.value]->elementType.type=="floatType")
-{
-        regno1="$f2";
-}
-}
-
-if(e2.elementType.type=="idType")
-{
-        if(symbolTable[e2.value]->elementType.type=="floatType")
-{
-        regno1="$f2";
-}
-}
-
-
-if(e1.elementType.type=="floatType")
-{
-	regno1="$f2";
-}
-if(e2.elementType.type=="floatType")
-{
-        regno2="$f2";
-}
-
 string line3=cond+" "+regno1+", "+regno2+", "+label;
 code.push_back(line1);
 code.push_back(line2);

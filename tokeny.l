@@ -22,13 +22,14 @@ int yyerror(const char *,...);
 \]              {return ']';}
 \=\=		{yylval.text="bne";return COND; }
 \=              {return PRZYPISZ;}
-\<\=            {printf(">\n");yylval.text = "bgt";return COND;}
-\>\=		{printf(">=\n");yylval.text="blt";return COND;}
-\<		{printf("<<<<<<<<BOY\n");yylval.text = "bge";return COND;}
-\>		{printf(">\n");yylval.text="ble";return COND;}
+\<\=            {yylval.text = "bgt";return COND;}
+\>\=		{yylval.text="blt";return COND;}
+\<		{yylval.text = "bge";return COND;}
+\>		{yylval.text="ble";return COND;}
 \!\=		{yylval.text ="beq";return COND;}
 \;              {return ';';}
-"if"		{printf("ifTag\n");return IF;}
+"if"		{return IF;}
+"while"		{printf("while detected\n");return WHILE;}
 \{		{;}
 \}		{;}
 0|[1-9][0-9]*   {yylval.ival = atoi(yytext);return LC;}

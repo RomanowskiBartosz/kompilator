@@ -28,7 +28,7 @@ float fval;
 %token LT GT CSTART CEND PRZYPISZ
 %token LEQ GEQ EQ
 %token FOR INT FLOAT
-%token IF
+%token IF WHILE
 %token <text> ID
 %token <ival> LC
 %token <fval> LR
@@ -96,12 +96,17 @@ wyrprz : INT ID PRZYPISZ wyr            {printf("%s =",$2);
 					k.sizesTemp.clear();
 					}
 	|IFExpr				{;}
+	|WHILEexpr			{;}
         ;
 	;
 IFExpr	: ifBegin  blok			{cout<<"end of if"<<endl;k.genIfLabel();}
    	;
 ifBegin : IF '('wyr COND wyr')' 		{k.jumpStatment($4);}
 	;	
+WHILEexpr : whileBegin blok		{cout<<"end of while"<<endl;k.genWhileLabel();}
+	  ;
+whileBegin : WHILE '('wyr COND wyr')'	{k.whileJump($4);}
+	   ;
 dimDecl : '[' sizeConst ']'             {;}
         ;
 
