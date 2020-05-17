@@ -117,14 +117,14 @@ sizeValue: LC 	{
 
 wyr
 
-        :wyr '+' part           {printf(" + " );k.genCode('+',"add ");}
-        |wyr '-' part           {printf(" - ");k.genCode('-',"sub ");}
+        :wyr '+' part           {printf(" + " );k.genCode('+',"add");}
+        |wyr '-' part           {printf(" - ");k.genCode('-',"sub");}
         |part                   {printf(" ");}
         ;
 
 part
-        :part '*' czynnik       {printf(" * ");k.genCode('*',"mul ");}
-        |part '/' czynnik       {printf(" / ");k.genCode('/',"div ");}
+        :part '*' czynnik       {printf(" * ");k.genCode('*',"mul");}
+        |part '/' czynnik       {printf(" / ");k.genCode('/',"div");}
         |czynnik                {printf(" ");}
         ;
 

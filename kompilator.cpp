@@ -117,11 +117,11 @@ string kompilator::convertTypes(int regno,element e1,element e2)
 	
 	if(!(e1.elementType.type=="floatType"&&e2.elementType.type=="intType"))
 	{
-		return "";
+		return "error wrong conversion";
 	}
 	stringstream s;
-	s<< "mtc1 $t"<<regno<<", "<<"$f"<<regno<<"\n";
-	s<<"cvt.s.w $f"<<regno<<", "<<"$f"<<regno;
+	s<< "mtc1 $t"<<regno<<", "<<"$f"<<floatCounter<<endl;
+	s<<"cvt.s.w $f"<<floatCounter<<", "<<"$f"<<floatCounter;
 	return s.str();
 
 }
@@ -141,10 +141,12 @@ if(op == '=')
 element *s =new element(e2.elementType,e2.value);
 insertSymbol(e2.value,s,"0");
 string line1=loadLine(e1,0);
-cout<<"czy to ta linia?   "<<line1<<endl;
-cout<<"typ elementu"<<s->elementType.type<<endl;
-
-string line4= "sw $t0 , " +e2.value;
+type last=symbolTable[e2.value]->elementType;
+	string line4= "sw $t0 , " +e2.value;
+if(last.type=="floatType")
+{
+line4="s.s $f0, "+e2.value;
+}	
 code.push_back(line1);
 code.push_back(line4);
 threesStream<<e2.value <<op <<e1.value << endl;
@@ -181,29 +183,48 @@ else
 stringstream s;
 s<< e1.value << op << e2.value << endl;
 threesStream <<s.str();
-//
-type *t=new intType(1);
-element *result=new element(*t,temp);
-arguments.push(*result);
-insertSymbol(temp,result,"0");
-//
+cout<<"TYPY ZMIENNYCH"<<endl;
+cout<<e1.elementType.type<<endl;
+cout<<e2.elementType.type<<endl;
+
 type *finalType=new intType(1);
+
 if(e1.elementType.type=="floatType"||e2.elementType.type=="floatType")
 {
 	finalType=new floatType(1);
 }
+if(e1.elementType.type=="idType")
+{
+if(symbolTable[e1.value]->elementType.type=="floatType")
+	        finalType=new floatType(1);
+
+}
+
+if(e2.elementType.type=="idType")
+{
+if(symbolTable[e2.value]->elementType.type=="floatType")
+                finalType=new floatType(1);
+
+}
+
 string line0='#'+s.str();
 string line1=loadLine(e1,0);
 // konwersjs typow
 string line2=loadLine(e2,1);
 //konwersja typow
-string line3= mnemoOp +"$t0,$t0,$t1";
+string line3= mnemoOp +" $t0,$t0,$t1";
 string line4 = "sw $t0," +temp;
+
+if(finalType->type=="floatType")
+{
+ line3= mnemoOp+".s " +"$f0,$f0,$f1";
+ line4 = "s.s $f0," +temp;
+}
 code.push_back(line0);
 code.push_back(line1);
 code.push_back(convertTypes(0,e1,e2));
 code.push_back(line2);
-code.push_back(convertTypes(1,e2,e1));
+code.push_back(convertTypes(0,e2,e1));
 code.push_back(line3);
 code.push_back(line4);
 

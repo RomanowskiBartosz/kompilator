@@ -1493,13 +1493,13 @@ yyreduce:
 
   case 16:
 #line 120 "def.yy"
-                                {printf(" + " );k.genCode('+',"add ");}
+                                {printf(" + " );k.genCode('+',"add");}
 #line 1498 "def.tab.cc"
     break;
 
   case 17:
 #line 121 "def.yy"
-                                {printf(" - ");k.genCode('-',"sub ");}
+                                {printf(" - ");k.genCode('-',"sub");}
 #line 1504 "def.tab.cc"
     break;
 
@@ -1511,13 +1511,13 @@ yyreduce:
 
   case 19:
 #line 126 "def.yy"
-                                {printf(" * ");k.genCode('*',"mul ");}
+                                {printf(" * ");k.genCode('*',"mul");}
 #line 1516 "def.tab.cc"
     break;
 
   case 20:
 #line 127 "def.yy"
-                                {printf(" / ");k.genCode('/',"div ");}
+                                {printf(" / ");k.genCode('/',"div");}
 #line 1522 "def.tab.cc"
     break;
 
