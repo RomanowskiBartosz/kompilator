@@ -1,0 +1,9 @@
+int a=22;
+print(a);
+read(a);
+print(a);
+
+float b=3.14;
+print(b);
+read(b);
+print(b);

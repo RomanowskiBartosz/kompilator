@@ -39,4 +39,10 @@ floatType::floatType(int size)
 type="floatType";
 this->size=size;
 };
+stringType::stringType(int size)
+{
+       type="stringType";
+	this->size=size;
+
+};
 

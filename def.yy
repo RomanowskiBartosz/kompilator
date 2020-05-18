@@ -16,7 +16,7 @@ extern "C" int yylex();
 extern "C" int yyerror(const char *msg,...);
 using namespace std;
 
-
+int elseFlag;
 kompilator k;
 %}
 %union
@@ -24,15 +24,14 @@ kompilator k;
 int ival;
 float fval;
 };
-
-%token LT GT CSTART CEND PRZYPISZ
-%token LEQ GEQ EQ
-%token FOR INT FLOAT
-%token IF WHILE
+%token PRZYPISZ
+%token PRINT READ INT FLOAT
+%token IF ELSE WHILE
 %token <text> ID
 %token <ival> LC
 %token <fval> LR
 %token <text> COND
+%token <text> STRING
 %%
 blok : linia                    {;}
      | blok linia               {;}
@@ -95,15 +94,29 @@ wyrprz : INT ID PRZYPISZ wyr            {printf("%s =",$2);
                                         k.insertArray($2,e);
 					k.sizesTemp.clear();
 					}
-	|IFExpr				{;}
+	|IFExpr				{if(elseFlag==0)
+                                        {
+                                        k.genElse();
+                                        }
+                                        elseFlag=0;
+					}
+	|IFELSEexpr			{;}
 	|WHILEexpr			{;}
+	|PRINTexpr			{;}
+	|READexpr			{;}
         ;
+READexpr :READ'('ID')'			{k.read($3);}
+PRINTexpr :PRINT'('ID')'		{k.printID($3);}
+	  |PRINT'('STRING')'		{k.printString($3);}
 	;
-IFExpr	: ifBegin  blok			{cout<<"end of if"<<endl;k.genIfLabel();}
+IFELSEexpr : IFExpr ELSEexpr		{;}
+	 ;
+ELSEexpr:ELSE blok			{elseFlag=1;k.genElse();}
+IFExpr	: ifBegin  blok			{cout<<"endofIF"<<endl;k.genIfLabel();}
    	;
 ifBegin : IF '('wyr COND wyr')' 		{k.jumpStatment($4);}
 	;	
-WHILEexpr : whileBegin blok		{cout<<"end of while"<<endl;k.genWhileLabel();}
+WHILEexpr : whileBegin blok		{k.genWhileLabel();}
 	  ;
 whileBegin : WHILE '('wyr COND wyr')'	{k.whileJump($4);}
 	   ;
@@ -161,7 +174,7 @@ czynnik
 
 int main(int argc,char *argv[])
 {
-
+elseFlag=0;
 if(argc>1)
 {
 //otwieranie plikow yyout, yyin
@@ -194,9 +207,15 @@ for(auto symbol : k.symbolTable)
 	cout<<" .float "<<symbol.second->value<<endl;
 	}
 	else
+	if(symbol.second->elementType.type=="stringType")
+        {
+        cout<<"  .asciiz "<<symbol.second->value<<endl;
+        }
+	else
         cout<<"other type"<<endl;
         }
         }
+	
 }
 cout << ".text\n"<<endl;
 for(string line :k.code)

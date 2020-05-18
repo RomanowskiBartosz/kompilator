@@ -28,7 +28,14 @@ public:
 	int labelCounter;
 	void jumpStatment(string);
 	stack<string> ifLabels;
+	stack<string> elseLabels;
+	stack<string> whileBegin;
 	int whileCounter;
 	void genWhileLabel();
 	void whileJump(string);
+	int printCounter;
+	void printID(string);
+	void printString(string);
+	void read(string);
+	void genElse();
 };

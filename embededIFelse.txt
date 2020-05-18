@@ -1,0 +1,20 @@
+int a=4;
+
+if(a<10)
+{
+print("if1");
+if(a>5)
+{
+print("if2");
+}else
+{
+print("else2");
+if(a==4)
+{
+print("if3");
+};
+};
+}else
+{
+print("else1");
+};

@@ -18,29 +18,97 @@ vector<int> valuesTemp;
 stringstream threesStream;
 floatCounter=0;
 stack<string> ifLabels;
+stack<string> whileBegin;
+stack<string> elseLabels;
 labelCounter=0;
 whileCounter=0;
+printCounter=0;
+}
+void kompilator::read(string ID)
+{
+ element *e=symbolTable[ID];
+        if(e->elementType.type=="intType")
+        {
+        code.push_back("li $v0 , 5");
+	code.push_back("syscall");
+        code.push_back("sw $v0 , "+ID);
+        }
+        if(e->elementType.type=="floatType")
+        {
+        code.push_back("li $v0 , 6");
+	code.push_back("syscall");
+        code.push_back("s.s $f0 , "+ID);
+        
+        }
+
+}
+void kompilator::printString(string str)
+{
+type *text=new stringType(1);
+element *e=new element(*text,"str"+to_string(printCounter));
+
+insertSymbol(e->value,e,str);
+
+code.push_back("li $v0 , 4");
+string line="la $a0 ,str"+to_string(printCounter);
+code.push_back(line);
+code.push_back("syscall");
+printCounter++;
+}
+void kompilator::printID(string ID)
+{
+	element *e=symbolTable[ID];
+	if(e->elementType.type=="intType")
+	{
+	code.push_back("li $v0 , 1");
+	code.push_back("lw $a0 , "+ID);
+	code.push_back("syscall");
+	}
+	if(e->elementType.type=="floatType")
+	{
+	code.push_back("li $v0 , 2");
+        code.push_back("l.s $f12 , "+ID);
+        code.push_back("syscall");
+	}
 }
 void kompilator::genWhileLabel()
 {
 string label=ifLabels.top();
 ifLabels.pop();
-string line4="b WHBEG"+to_string(whileCounter);
-code.push_back(line4);
+
+string beginLabel=whileBegin.top();
+whileBegin.pop();
+string line="b "+beginLabel;
+code.push_back(line);
 code.push_back(label+':');
-whileCounter++;
+}
+void kompilator::genElse()
+{
+string	label=elseLabels.top();
+elseLabels.pop();
+ label=label+':';
+code.push_back(label);
 }
 
 void kompilator::genIfLabel()
 {
 string label=ifLabels.top();
 ifLabels.pop();
+
+string elseJump=" b "+elseLabels.top();
+
+
+code.push_back(elseJump);
+
 code.push_back(label+':');
 }
 void kompilator::whileJump(string cond)
 {
 string label="WHEND"+to_string(whileCounter);
 ifLabels.push(label);
+string labelBegin="WHBEG"+to_string(whileCounter);
+
+whileBegin.push(labelBegin);
 
 
 element e2=arguments.top();
@@ -50,7 +118,6 @@ arguments.pop();
 
 string line1=loadLine(e1,2);
 string line2=loadLine(e2,3);
-// zmienic by wczytywalo z dobrych rejestrow
 string regno1="$t2";
 string regno2="$t3";
 string line3=cond+" "+regno1+", "+regno2+", "+label;
@@ -58,22 +125,20 @@ code.push_back("WHBEG"+to_string(whileCounter)+':');
 code.push_back(line1);
 code.push_back(line2);
 code.push_back(line3);
-
+whileCounter++;
 }
 void kompilator::jumpStatment(string cond)
 {
 labelCounter++;
 string label="IFLB"+to_string(labelCounter);
 ifLabels.push(label);
-
+string elseLabel="ELEND"+to_string(labelCounter);
+elseLabels.push(elseLabel);
 element e2=arguments.top();
 arguments.pop();
 element e1=arguments.top();
 arguments.pop();
-/*
-lw $t2 , x
-lw $t3 , result23
-*/
+
 string line1=loadLine(e1,2);
 string line2=loadLine(e2,3);
 // zmienic by wczytywalo z dobrych rejestrow
@@ -84,6 +149,7 @@ code.push_back(line1);
 code.push_back(line2);
 code.push_back(line3);
 }
+
 int kompilator::insertSymbol(string name,element *ele,string value)
 {
 if(symbolTable.find(name)==symbolTable.end())

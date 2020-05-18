@@ -33,6 +33,11 @@ class intArrayType :public type
 {
 	public: intArrayType(int);
 };
+class stringType :public type
+{
+        public: stringType(int);
+};
+
 
 class element
 {

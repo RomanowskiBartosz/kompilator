@@ -11,6 +11,9 @@ int yyerror(const char *,...);
 %%
 "int"           {return INT;}
 "float"         {return FLOAT;}
+"print"		{return PRINT;}
+"read"		{return READ;}
+\"[A-Za-z0-9_]*\" {yylval.text=strdup(yytext);return STRING;}
 \+              {return '+';}
 \-              {return '-';}
 \*              {return '*';}
@@ -29,7 +32,8 @@ int yyerror(const char *,...);
 \!\=		{yylval.text ="beq";return COND;}
 \;              {return ';';}
 "if"		{return IF;}
-"while"		{printf("while detected\n");return WHILE;}
+"else"		{return ELSE;}
+"while"		{return WHILE;}
 \{		{;}
 \}		{;}
 0|[1-9][0-9]*   {yylval.ival = atoi(yytext);return LC;}
@@ -37,8 +41,6 @@ int yyerror(const char *,...);
 [A-Za-z_][A-Za-z0-9_]*          {yylval.text=strdup(yytext);return ID;}
 \                               {;}
 \n                              {yylineno++;}
-\<\*                            {return CSTART;}
-\*\>                            {return CEND;}
 .                               {yyerror("Blad leksykalny\n");}
 %%
 int yyerror(const char *msg,...)

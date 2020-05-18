@@ -1,0 +1,14 @@
+int a=0;
+int b=0;
+int t[10,10];
+while(a<10)
+{
+while(b<10)
+{
+t[a,b]=a*b;
+b=b+1;
+};
+b=0;
+a=a+1;
+};
+
