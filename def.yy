@@ -9,11 +9,15 @@
 #include <algorithm>
 #include "types.h"
 #include "kompilator.h"
+#include <fstream>
+
 
 #define INFILE_ERROR 1
 #define OUTLIFE_ERROR 2
 extern "C" int yylex();
 extern "C" int yyerror(const char *msg,...);
+extern FILE *yyin;
+extern FILE *yyout;
 using namespace std;
 
 int elseFlag;
@@ -75,7 +79,10 @@ wyrprz : INT ID PRZYPISZ wyr            {printf("%s =",$2);
 						yyerror("this variable has not been declared\n");
 					}else
 					{
-					k.genCode('=',"sw");
+					if(-1==k.genCode('=',"sw"))
+					{
+					yyerror("trying to save float to int");
+					}
 					k.arguments.push(*e);
 					}
 
@@ -153,7 +160,6 @@ part
 
 czynnik
         :ID                     {
-                                printf(" %s zmienna ",$1);
                                 type *ID=new idType(1);
                                 element e(*ID,$1);
                                 k.arguments.push(e);
@@ -161,14 +167,16 @@ czynnik
 
 
         |LC                     {
-                                printf( " %d ",$1);
-                                //cout<<"string value of LC"<<to_string($1)<<endl;
                                 type *INT=new intType(1);
                                 element e(*INT,to_string($1));
                                 k.arguments.push(e);
                                 }
         |'(' wyr ')'            {printf(" ");}
 	|LR			{k.makeFloat($1);}
+	|ID dimDecl		{type *array=new intArrayType(1);
+				element e(*array,$1);
+				k.arguments.push(e);
+				}
         ;
 %%
 
@@ -178,7 +186,10 @@ elseFlag=0;
 if(argc>1)
 {
 //otwieranie plikow yyout, yyin
+yyin = fopen(argv[1], "r");
+yyout=fopen(argv[2],"w");
 }
+
 else
 {
 // pliki juz sa otwarte
@@ -186,30 +197,34 @@ else
 
 yyparse();
 cout<<endl;
-
-cout<< ".data\n"<<endl;
+fprintf(yyout, ".data\n");
 for(auto symbol : k.symbolTable)
-{
-        cout<< symbol.first<<": ";
+{	
+	string symbolStr=symbol.first+": ";	
+	fprintf(yyout,symbolStr.c_str());
         if(symbol.second->elementType.type =="intType")
         {
-        cout << " .word "<<symbol.second->value<<endl;
+	string text=" .word "+string(symbol.second->value)+'\n';
+	fprintf(yyout,text.c_str());
         }else
         {
         if(symbol.second->elementType.type=="arrayInt")
         {
-        cout << " .space " <<(symbol.second->elementType.size*4)<<endl;
+	 string text=" .space "+to_string(symbol.second->elementType.size*4)+'\n';
+	 fprintf(yyout,text.c_str());
         }
 	else
         {
 	if(symbol.second->elementType.type=="floatType")
 	{
-	cout<<" .float "<<symbol.second->value<<endl;
+	string text=" .float "+string(symbol.second->value)+'\n';
+	 fprintf(yyout,text.c_str());
 	}
 	else
 	if(symbol.second->elementType.type=="stringType")
         {
-        cout<<"  .asciiz "<<symbol.second->value<<endl;
+	string text=" .asciiz "+string(symbol.second->value);
+	 fprintf(yyout,text.c_str());
         }
 	else
         cout<<"other type"<<endl;
@@ -217,13 +232,15 @@ for(auto symbol : k.symbolTable)
         }
 	
 }
-cout << ".text\n"<<endl;
+string code=".text\n";
+fprintf(yyout,code.c_str());
 for(string line :k.code)
 {
-cout << line<<endl;
+string formated=line+'\n';
+ fprintf(yyout,formated.c_str());
 }
-cout<<"Threes.txt:\n";
-cout << k.threesStream.str();
+//cout<<"Threes.txt:\n";
+//cout << k.threesStream.str();
 
 
 

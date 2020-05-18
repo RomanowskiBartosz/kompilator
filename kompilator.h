@@ -19,7 +19,7 @@ public:
 	vector<element*>sizesTemp;
 	int insertSymbol(string name,element *ele,string value);
 	void addOp(char);
-	void genCode(char,string);
+	int genCode(char,string);
 	void insertArray(string,element*);
 	void makeFloat(float value);
 	string loadLine(element,int);
@@ -38,4 +38,5 @@ public:
 	void printString(string);
 	void read(string);
 	void genElse();
+	void calculateTableAddress(string);
 };

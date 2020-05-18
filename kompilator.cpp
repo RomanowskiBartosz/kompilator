@@ -213,8 +213,14 @@ if(e.elementType.type=="idType")
 	s<<".s ";
 	regName="$f";
 	}
+	 if(e.elementType.type=="arrayInt")
+        {
+        s<< "w ";
+        }
+
 }else
 {
+	
 if(e.elementType.type=="intType")
 {
 	s<<"i ";
@@ -225,6 +231,11 @@ if(e.elementType.type=="floatType")
         s<<".s ";
         regName="$f";
 }
+if(e.elementType.type=="arrayInt")
+{
+        s<< "w ";
+}
+
 }
 s<<regName<<regno<<", "<<valueName;
 return s.str();
@@ -255,39 +266,13 @@ string kompilator::convertTypes(int regno,element e1,element e2)
 	return s.str();
 
 }
-void kompilator::genCode(char op,string mnemoOp)
-{
-element e2=arguments.top();
-arguments.pop();
-element e1=arguments.top();
-arguments.pop();
-string temp="result";
-static int counter=1;
-temp+=to_string(counter);
-threesStream<<temp<<" <= ";
-if(op == '=')
-{
-//tu bedzie werdydikacja zgodnosci jak ja napiszesz idioto
-element *s =new element(e2.elementType,e2.value);
-insertSymbol(e2.value,s,"0");
-string line1=loadLine(e1,0);
-type last=symbolTable[e2.value]->elementType;
-	string line4= "sw $t0 , " +e2.value;
-if(last.type=="floatType")
-{
-line4="s.s $f0, "+e2.value;
-}	
-code.push_back(line1);
-code.push_back(line4);
-threesStream<<e2.value <<op <<e1.value << endl;
-}
-else
-if(op=='a')
-{
 
-stringstream arrayValue;
-arrayValue<<"la $t4 ,"<<e2.value<<endl;
-element *my=symbolTable[e2.value];
+void kompilator::calculateTableAddress(string ele)
+{
+	stringstream arrayValue;
+	arrayValue<<"la $t4 ,"<<ele<<endl;
+	element* my=symbolTable[ele];
+
 for(int i=0;i<sizesTemp.size();i++)
 {
         if(sizesTemp[i]->elementType.type=="indexType")
@@ -303,6 +288,41 @@ for(int i=0;i<sizesTemp.size();i++)
         arrayValue<<"li $t7,"<<my->elementType.dims[i]<<endl<<"mul $t6,$t6,$t7"<<endl<<"mul $t6,$t6,4"<<endl<<"add $t4,$t4,$t6"<<endl;
 }
 code.push_back(arrayValue.str());
+}
+int kompilator::genCode(char op,string mnemoOp)
+{
+element e2=arguments.top();
+arguments.pop();
+element e1=arguments.top();
+arguments.pop();
+string temp="result";
+static int counter=1;
+temp+=to_string(counter);
+threesStream<<temp<<" <= ";
+if(op == '=')
+{
+element *s =new element(e2.elementType,e2.value);
+insertSymbol(e2.value,s,"0");
+string line1=loadLine(e1,0);
+type last=symbolTable[e2.value]->elementType;
+	string line4= "sw $t0 , " +e2.value;
+
+if(last.type=="intArrayType")
+{
+calculateTableAddress(e2.value);
+}
+if(last.type=="floatType")
+{
+line4="s.s $f0, "+e2.value;
+}	
+code.push_back(line1);
+code.push_back(line4);
+threesStream<<e2.value <<op <<e1.value << endl;
+}
+else
+if(op=='a')
+{
+	calculateTableAddress(e2.value);
 string line1=loadLine(e1,0);
 string line2="sw $t0, ($t4)";
 code.push_back(line1);
@@ -313,10 +333,6 @@ else
 stringstream s;
 s<< e1.value << op << e2.value << endl;
 threesStream <<s.str();
-cout<<"TYPY ZMIENNYCH"<<endl;
-cout<<e1.elementType.type<<endl;
-cout<<e2.elementType.type<<endl;
-
 type *finalType=new intType(1);
 
 if(e1.elementType.type=="floatType"||e2.elementType.type=="floatType")
@@ -365,7 +381,7 @@ element *arg=new element(*argType,temp);
 arguments.push(*arg);
 }
 counter++;
-
+return 0;
 };
 
 
