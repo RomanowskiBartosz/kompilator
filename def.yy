@@ -41,7 +41,7 @@ blok : linia                    {;}
      | blok linia               {;}
      ;
 
-linia : wyrprz ';'              {printf(" ;\n ");}
+linia : wyrprz ';'              {;}
       ;
 
 wyrprz : INT ID PRZYPISZ wyr            {
@@ -151,14 +151,14 @@ sizeValue: LC 	{
 
 wyr
 
-        :wyr '+' part           {printf(" + " );k.genCode('+',"add");}
-        |wyr '-' part           {printf(" - ");k.genCode('-',"sub");}
+        :wyr '+' part           {k.genCode('+',"add");}
+        |wyr '-' part           {k.genCode('-',"sub");}
         |part                   {printf(" ");}
         ;
 
 part
-        :part '*' czynnik       {printf(" * ");k.genCode('*',"mul");}
-        |part '/' czynnik       {printf(" / ");k.genCode('/',"div");}
+        :part '*' czynnik       {k.genCode('*',"mul");}
+        |part '/' czynnik       {k.genCode('/',"div");}
         |czynnik                {printf(" ");}
         ;
 
@@ -228,7 +228,7 @@ for(auto symbol : k.symbolTable)
 	else
 	if(symbol.second->elementType.type=="stringType")
         {
-	string text=" .asciiz "+string(symbol.second->value);
+	string text=" .asciiz "+string(symbol.second->value)+'\n';
 	 fprintf(yyout,text.c_str());
         }
 	else

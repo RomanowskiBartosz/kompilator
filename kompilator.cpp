@@ -299,7 +299,7 @@ temp+=to_string(counter);
 threesStream<<temp<<" <= ";
 if(op == '=')
 {
-cout<<"e2"<<e2.value<<endl;
+
 if(symbolTable[e2.value]->elementType.type=="intType")
 {
 	if(e1.elementType.type=="idType")
@@ -330,6 +330,7 @@ if(last.type=="floatType")
 line4="s.s $f0, "+e2.value;
 }	
 code.push_back(line1);
+code.push_back(convertTypes(0,e2,e1));
 code.push_back(line4);
 threesStream<<e2.value <<op <<e1.value << endl;
 }

@@ -542,10 +542,10 @@ static const yytype_int8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    40,    40,    41,    44,    47,    63,    76,    99,   105,
-     110,   116,   117,   118,   119,   121,   122,   123,   125,   127,
-     128,   130,   132,   134,   136,   139,   140,   143,   147,   156,
-     157,   158,   162,   163,   164,   168,   175,   180,   181,   182
+       0,    40,    40,    41,    44,    47,    63,    75,    97,   103,
+     108,   114,   115,   116,   117,   119,   120,   121,   123,   125,
+     126,   128,   130,   132,   134,   137,   138,   141,   145,   154,
+     155,   156,   160,   161,   162,   166,   173,   178,   179,   180
 };
 #endif
 
@@ -1397,13 +1397,13 @@ yyreduce:
 
   case 4:
 #line 44 "def.yy"
-                                {printf(" ;\n ");}
+                                {;}
 #line 1402 "def.tab.cc"
     break;
 
   case 5:
 #line 47 "def.yy"
-                                        {printf("%s =",(yyvsp[-2].text));
+                                        {
                                         type *ID=new idType(1);
                                         element *e=new element(*ID,(yyvsp[-2].text));
                                         k.arguments.push(*e);
@@ -1423,8 +1423,7 @@ yyreduce:
 
   case 6:
 #line 63 "def.yy"
-                                        {
-					printf("%s =",(yyvsp[-2].text));
+                                        {	
                                         type *ID=new idType(1);
                                         element *e=new element(*ID,(yyvsp[-2].text));
                                         k.arguments.push(*e);
@@ -1436,13 +1435,12 @@ yyreduce:
                                         k.genCode('=',"sw");
 
 					}
-#line 1440 "def.tab.cc"
+#line 1439 "def.tab.cc"
     break;
 
   case 7:
-#line 76 "def.yy"
+#line 75 "def.yy"
                                         {
-					printf("%s =",(yyvsp[-2].text));
                                         type *ID=new idType(1);
                                         element *e=new element(*ID,(yyvsp[-2].text));
                                        	k.arguments.push(*e);
@@ -1462,235 +1460,235 @@ yyreduce:
 
                                         
 					}
-#line 1466 "def.tab.cc"
+#line 1464 "def.tab.cc"
     break;
 
   case 8:
-#line 99 "def.yy"
+#line 97 "def.yy"
                                        {type *ID=new idType(4);
                    	                 element e(*ID,(yyvsp[-3].text));
                                         k.arguments.push(e);
                                         k.genCode('a',"sw");
 					k.sizesTemp.clear();
                                         }
-#line 1477 "def.tab.cc"
+#line 1475 "def.tab.cc"
     break;
 
   case 9:
-#line 105 "def.yy"
+#line 103 "def.yy"
                                         {type *INT=new intArrayType(1);
                                         element *e=new element(*INT,(yyvsp[-1].text));
                                         k.insertArray((yyvsp[-1].text),e);
 					k.sizesTemp.clear();
 					}
-#line 1487 "def.tab.cc"
+#line 1485 "def.tab.cc"
     break;
 
   case 10:
-#line 110 "def.yy"
+#line 108 "def.yy"
                                         {if(elseFlag==0)
                                         {
                                         k.genElse();
                                         }
                                         elseFlag=0;
 					}
-#line 1498 "def.tab.cc"
+#line 1496 "def.tab.cc"
     break;
 
   case 11:
-#line 116 "def.yy"
+#line 114 "def.yy"
                                         {;}
-#line 1504 "def.tab.cc"
+#line 1502 "def.tab.cc"
     break;
 
   case 12:
-#line 117 "def.yy"
+#line 115 "def.yy"
                                         {;}
-#line 1510 "def.tab.cc"
+#line 1508 "def.tab.cc"
     break;
 
   case 13:
-#line 118 "def.yy"
+#line 116 "def.yy"
                                         {;}
-#line 1516 "def.tab.cc"
+#line 1514 "def.tab.cc"
     break;
 
   case 14:
-#line 119 "def.yy"
+#line 117 "def.yy"
                                         {;}
-#line 1522 "def.tab.cc"
+#line 1520 "def.tab.cc"
     break;
 
   case 15:
-#line 121 "def.yy"
+#line 119 "def.yy"
                                         {k.read((yyvsp[-1].text));}
-#line 1528 "def.tab.cc"
+#line 1526 "def.tab.cc"
     break;
 
   case 16:
-#line 122 "def.yy"
+#line 120 "def.yy"
                                         {k.printID((yyvsp[-1].text));}
-#line 1534 "def.tab.cc"
+#line 1532 "def.tab.cc"
     break;
 
   case 17:
-#line 123 "def.yy"
+#line 121 "def.yy"
                                         {k.printString((yyvsp[-1].text));}
-#line 1540 "def.tab.cc"
+#line 1538 "def.tab.cc"
     break;
 
   case 18:
-#line 125 "def.yy"
+#line 123 "def.yy"
                                         {;}
-#line 1546 "def.tab.cc"
+#line 1544 "def.tab.cc"
     break;
 
   case 19:
-#line 127 "def.yy"
+#line 125 "def.yy"
                                         {elseFlag=1;k.genElse();}
-#line 1552 "def.tab.cc"
+#line 1550 "def.tab.cc"
     break;
 
   case 20:
-#line 128 "def.yy"
-                                        {cout<<"endofIF"<<endl;k.genIfLabel();}
-#line 1558 "def.tab.cc"
+#line 126 "def.yy"
+                                        {k.genIfLabel();}
+#line 1556 "def.tab.cc"
     break;
 
   case 21:
-#line 130 "def.yy"
+#line 128 "def.yy"
                                                 {k.jumpStatment((yyvsp[-2].text));}
-#line 1564 "def.tab.cc"
+#line 1562 "def.tab.cc"
     break;
 
   case 22:
-#line 132 "def.yy"
+#line 130 "def.yy"
                                         {k.genWhileLabel();}
-#line 1570 "def.tab.cc"
+#line 1568 "def.tab.cc"
     break;
 
   case 23:
-#line 134 "def.yy"
+#line 132 "def.yy"
                                         {k.whileJump((yyvsp[-2].text));}
-#line 1576 "def.tab.cc"
+#line 1574 "def.tab.cc"
     break;
 
   case 24:
-#line 136 "def.yy"
+#line 134 "def.yy"
                                         {;}
-#line 1582 "def.tab.cc"
+#line 1580 "def.tab.cc"
     break;
 
   case 25:
-#line 139 "def.yy"
+#line 137 "def.yy"
                                         {;}
-#line 1588 "def.tab.cc"
+#line 1586 "def.tab.cc"
     break;
 
   case 26:
-#line 140 "def.yy"
+#line 138 "def.yy"
                                         {;}
-#line 1594 "def.tab.cc"
+#line 1592 "def.tab.cc"
     break;
 
   case 27:
-#line 143 "def.yy"
+#line 141 "def.yy"
                 {	
 	 	type *index=new arrayIndexType(1);
 	 	element *e=new element(*index,to_string((yyvsp[0].ival)));
 	 	k.sizesTemp.push_back(e);}
-#line 1603 "def.tab.cc"
+#line 1601 "def.tab.cc"
     break;
 
   case 28:
-#line 147 "def.yy"
+#line 145 "def.yy"
                 {
 		type *INT=new intType(1);
 		element *e=new element(*INT,(yyvsp[0].text));
 		k.sizesTemp.push_back(e);
 		}
-#line 1613 "def.tab.cc"
+#line 1611 "def.tab.cc"
     break;
 
   case 29:
-#line 156 "def.yy"
-                                {printf(" + " );k.genCode('+',"add");}
-#line 1619 "def.tab.cc"
+#line 154 "def.yy"
+                                {k.genCode('+',"add");}
+#line 1617 "def.tab.cc"
     break;
 
   case 30:
-#line 157 "def.yy"
-                                {printf(" - ");k.genCode('-',"sub");}
-#line 1625 "def.tab.cc"
+#line 155 "def.yy"
+                                {k.genCode('-',"sub");}
+#line 1623 "def.tab.cc"
     break;
 
   case 31:
-#line 158 "def.yy"
+#line 156 "def.yy"
                                 {printf(" ");}
-#line 1631 "def.tab.cc"
+#line 1629 "def.tab.cc"
     break;
 
   case 32:
-#line 162 "def.yy"
-                                {printf(" * ");k.genCode('*',"mul");}
-#line 1637 "def.tab.cc"
+#line 160 "def.yy"
+                                {k.genCode('*',"mul");}
+#line 1635 "def.tab.cc"
     break;
 
   case 33:
-#line 163 "def.yy"
-                                {printf(" / ");k.genCode('/',"div");}
-#line 1643 "def.tab.cc"
+#line 161 "def.yy"
+                                {k.genCode('/',"div");}
+#line 1641 "def.tab.cc"
     break;
 
   case 34:
-#line 164 "def.yy"
+#line 162 "def.yy"
                                 {printf(" ");}
-#line 1649 "def.tab.cc"
+#line 1647 "def.tab.cc"
     break;
 
   case 35:
-#line 168 "def.yy"
+#line 166 "def.yy"
                                 {
                                 type *ID=new idType(1);
                                 element e(*ID,(yyvsp[0].text));
                                 k.arguments.push(e);
                                 }
-#line 1659 "def.tab.cc"
+#line 1657 "def.tab.cc"
     break;
 
   case 36:
-#line 175 "def.yy"
+#line 173 "def.yy"
                                 {
                                 type *INT=new intType(1);
                                 element e(*INT,to_string((yyvsp[0].ival)));
                                 k.arguments.push(e);
                                 }
-#line 1669 "def.tab.cc"
+#line 1667 "def.tab.cc"
     break;
 
   case 37:
-#line 180 "def.yy"
+#line 178 "def.yy"
                                 {printf(" ");}
-#line 1675 "def.tab.cc"
+#line 1673 "def.tab.cc"
     break;
 
   case 38:
-#line 181 "def.yy"
+#line 179 "def.yy"
                                 {k.makeFloat((yyvsp[0].fval));}
-#line 1681 "def.tab.cc"
+#line 1679 "def.tab.cc"
     break;
 
   case 39:
-#line 182 "def.yy"
+#line 180 "def.yy"
                                 {type *array=new intArrayType(1);
 				element e(*array,(yyvsp[-1].text));
 				k.arguments.push(e);
 				}
-#line 1690 "def.tab.cc"
+#line 1688 "def.tab.cc"
     break;
 
 
-#line 1694 "def.tab.cc"
+#line 1692 "def.tab.cc"
 
       default: break;
     }
@@ -1922,7 +1920,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 187 "def.yy"
+#line 185 "def.yy"
 
 
 int main(int argc,char *argv[])
@@ -1969,7 +1967,7 @@ for(auto symbol : k.symbolTable)
 	else
 	if(symbol.second->elementType.type=="stringType")
         {
-	string text=" .asciiz "+string(symbol.second->value);
+	string text=" .asciiz "+string(symbol.second->value)+'\n';
 	 fprintf(yyout,text.c_str());
         }
 	else
