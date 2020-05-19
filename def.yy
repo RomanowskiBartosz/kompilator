@@ -44,7 +44,7 @@ blok : linia                    {;}
 linia : wyrprz ';'              {printf(" ;\n ");}
       ;
 
-wyrprz : INT ID PRZYPISZ wyr            {printf("%s =",$2);
+wyrprz : INT ID PRZYPISZ wyr            {
                                         type *ID=new idType(1);
                                         element *e=new element(*ID,$2);
                                         k.arguments.push(*e);
@@ -60,8 +60,7 @@ wyrprz : INT ID PRZYPISZ wyr            {printf("%s =",$2);
 					}
                                         }
 
-	|FLOAT ID PRZYPISZ wyr  	{
-					printf("%s =",$2);
+	|FLOAT ID PRZYPISZ wyr  	{	
                                         type *ID=new idType(1);
                                         element *e=new element(*ID,$2);
                                         k.arguments.push(*e);
@@ -74,7 +73,6 @@ wyrprz : INT ID PRZYPISZ wyr            {printf("%s =",$2);
 
 					}
 	|ID PRZYPISZ wyr		{
-					printf("%s =",$1);
                                         type *ID=new idType(1);
                                         element *e=new element(*ID,$1);
                                        	k.arguments.push(*e);
@@ -125,7 +123,7 @@ PRINTexpr :PRINT'('ID')'		{k.printID($3);}
 IFELSEexpr : IFExpr ELSEexpr		{;}
 	 ;
 ELSEexpr:ELSE blok			{elseFlag=1;k.genElse();}
-IFExpr	: ifBegin  blok			{cout<<"endofIF"<<endl;k.genIfLabel();}
+IFExpr	: ifBegin  blok			{k.genIfLabel();}
    	;
 ifBegin : IF '('wyr COND wyr')' 		{k.jumpStatment($4);}
 	;	

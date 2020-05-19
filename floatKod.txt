@@ -1,0 +1,72 @@
+.data
+a:  .word 0
+b:  .float 0
+c:  .float 0
+d:  .float 0
+e:  .word 0
+result2:  .float 0
+result4:  .float 0
+result6:  .word 0
+result8:  .word 0
+result9:  .float 0
+tmpFloat0:  .float 3.140000
+.text
+li $t0, 2
+sw $t0 , a
+#tmpFloat0+a
+
+l.s $f0, tmpFloat0
+
+lw $t1, a
+mtc1 $t1, $f1
+cvt.s.w $f1, $f1
+add.s $f0,$f0,$f1
+s.s $f0,result2
+l.s $f0, result2
+s.s $f0, b
+#b+2
+
+l.s $f0, b
+
+li $t1, 2
+mtc1 $t1, $f1
+cvt.s.w $f1, $f1
+add.s $f0,$f0,$f1
+s.s $f0,result4
+l.s $f0, result4
+s.s $f0, c
+li $v0 , 2
+l.s $f12 , c
+syscall
+#a+3
+
+lw $t0, a
+
+li $t1, 3
+
+add $t0,$t0,$t1
+sw $t0,result6
+lw $t0, result6
+sw $t0 , e
+#a+e
+
+lw $t0, a
+
+lw $t1, e
+
+add $t0,$t0,$t1
+sw $t0,result8
+#result8+b
+
+lw $t0, result8
+mtc1 $t0, $f0
+cvt.s.w $f0, $f0
+l.s $f1, b
+
+add.s $f0,$f0,$f1
+s.s $f0,result9
+l.s $f0, result9
+s.s $f0, d
+li $v0 , 2
+l.s $f12 , d
+syscall

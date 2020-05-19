@@ -202,8 +202,6 @@ string valueName=e.value;
 if(e.elementType.type=="idType")
 {	
 	e=*symbolTable[e.value];
-	cout<<"e is ID"<<endl;
-	cout<<"e type now is "<<e.elementType.type;
 	if(e.elementType.type=="intType")
         {
         s<< "w ";
@@ -261,8 +259,8 @@ string kompilator::convertTypes(int regno,element e1,element e2)
 		return "";
 	}
 	stringstream s;
-	s<< "mtc1 $t"<<regno<<", "<<"$f"<<floatCounter<<endl;
-	s<<"cvt.s.w $f"<<floatCounter<<", "<<"$f"<<floatCounter;
+	s<< "mtc1 $t"<<regno<<", "<<"$f"<<regno<<endl;
+	s<<"cvt.s.w $f"<<regno<<", "<<"$f"<<regno;
 	return s.str();
 
 }
@@ -309,13 +307,11 @@ if(symbolTable[e2.value]->elementType.type=="intType")
 		
 	 if(symbolTable[e1.value]->elementType.type=="floatType")
  	  {
-                cout<<"int=float";
-                return -1;
+              return -1;
        	  }
 	}
 	 if(e1.elementType.type=="floatType")
         {
-		cout<<"int=float";
 		return -1;
         }
 }

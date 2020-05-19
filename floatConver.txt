@@ -1,0 +1,7 @@
+int a=2;
+float b=3.14+a;
+float c=b+2;
+print(c);
+int e=a+3;
+float d=a+e+b;
+print(d);
