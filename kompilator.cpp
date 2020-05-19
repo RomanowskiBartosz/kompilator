@@ -319,19 +319,29 @@ element *s =new element(e2.elementType,e2.value);
 insertSymbol(e2.value,s,"0");
 string line1=loadLine(e1,0);
 type last=symbolTable[e2.value]->elementType;
-	string line4= "sw $t0 , " +e2.value;
 
-if(last.type=="intArrayType")
-{
-calculateTableAddress(e2.value);
-}
+string line4= "sw $t0 , " +e2.value;
 if(last.type=="floatType")
 {
 line4="s.s $f0, "+e2.value;
-}	
-code.push_back(line1);
+}
+string line5="";
+if(e1.elementType.type=="arrayInt")
+          {
+              calculateTableAddress(e1.value);
+		line4="sw $t0,( $t4)";
+		line5="sw $t0, "+e2.value;
+	  }
+else
+{
+	code.push_back(line1);
+}
+
+
+
 code.push_back(convertTypes(0,e2,e1));
 code.push_back(line4);
+code.push_back(line5);
 threesStream<<e2.value <<op <<e1.value << endl;
 }
 else
