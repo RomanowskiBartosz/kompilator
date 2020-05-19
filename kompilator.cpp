@@ -301,6 +301,24 @@ temp+=to_string(counter);
 threesStream<<temp<<" <= ";
 if(op == '=')
 {
+cout<<"e2"<<e2.value<<endl;
+if(symbolTable[e2.value]->elementType.type=="intType")
+{
+	if(e1.elementType.type=="idType")
+	{
+		
+	 if(symbolTable[e1.value]->elementType.type=="floatType")
+ 	  {
+                cout<<"int=float";
+                return -1;
+       	  }
+	}
+	 if(e1.elementType.type=="floatType")
+        {
+		cout<<"int=float";
+		return -1;
+        }
+}
 element *s =new element(e2.elementType,e2.value);
 insertSymbol(e2.value,s,"0");
 string line1=loadLine(e1,0);

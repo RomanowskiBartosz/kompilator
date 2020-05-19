@@ -50,8 +50,14 @@ wyrprz : INT ID PRZYPISZ wyr            {printf("%s =",$2);
                                         k.arguments.push(*e);
 					type *INT=new intType(1);
 					element *symbolElement=new element(*INT,$2);
-                                        k.insertSymbol($2,symbolElement,"0");
-                                        k.genCode('=',"sw");
+                                       if(1== k.insertSymbol($2,symbolElement,"0"))
+					{
+					yyerror("trying to declare an existing variable");
+					}
+                                       if(-1== k.genCode('=',"sw"))
+					{
+						yyerror("trying to assign float to an int");
+					}
                                         }
 
 	|FLOAT ID PRZYPISZ wyr  	{
@@ -187,6 +193,7 @@ if(argc>1)
 {
 //otwieranie plikow yyout, yyin
 yyin = fopen(argv[1], "r");
+if(argc>2)
 yyout=fopen(argv[2],"w");
 }
 
